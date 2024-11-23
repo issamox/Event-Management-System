@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->dateTime('date');
+            $table->date('date');
             $table->string('location');
             $table->text('description');
             $table->unsignedInteger('rsvp_limit');
