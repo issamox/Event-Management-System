@@ -9,17 +9,8 @@ use Illuminate\Support\Facades\Route;
 // Redirect the root URL to the dashboard
 Route::redirect('/', '/dashboard');
 
-// User profile routes (Only accessible to authenticated users)
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
-
-// Event routes
-
+// User with an Admin role
 Route::middleware(['auth','is_admin'])->group(function () {
 
     // Admins can access the full Events and users resource controller (CRUD actions)
@@ -27,7 +18,15 @@ Route::middleware(['auth','is_admin'])->group(function () {
     Route::resource('users', UserController::class);
 });
 
+// User with a User role
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
     // Routes for users to view events and RSVP (reservation)
     Route::get('events', [EventController::class, 'index'])->name('events.index');  // List of events

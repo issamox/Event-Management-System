@@ -106,6 +106,7 @@ class EventController extends Controller
             return redirect()->route('events.show', $event->id)->with('error', 'You have already a reservation for this event.');
         }
 
+        // unique email for RSVPs : each user hase a unique email.
 
         // Add RSVP entry
         $event->reservations()->attach(auth()->id());

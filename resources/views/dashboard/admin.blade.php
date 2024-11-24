@@ -30,26 +30,27 @@
             <!-- Latest Users Table -->
             <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Latest Users</h3>
-                <table class="min-w-full border-collapse border border-gray-300">
-                    <thead class="bg-gray-100 dark:bg-gray-700">
+                <table class="min-w-full border-collapse border border-gray-300 dark:border-gray-600">
+                    <thead class="bg-gray-100 dark:bg-blue-900">
                     <tr>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-sm font-medium">Name</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-sm font-medium">Email</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-sm font-medium">Role</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left text-sm font-medium">Created At</th>
+                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Name</th>
+                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Email</th>
+                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Role</th>
+                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:text-gray-300">Created At</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="bg-white dark:bg-gray-800">
                     @foreach ($data['latestUsers'] as $user)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $user->email }}</td>
-                            <td class="border border-gray-300 px-4 py-2 capitalize">{{ $user->role }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $user->created_at->format('Y-m-d') }}</td>
+                            <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-800 dark:text-gray-300">{{ $user->name }}</td>
+                            <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-800 dark:text-gray-300">{{ $user->email }}</td>
+                            <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 capitalize text-gray-800 dark:text-gray-300">{{ $user->role }}</td>
+                            <td class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-800 dark:text-gray-300">{{ $user->created_at->format('Y-m-d') }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+
             </div>
 
             <!-- Reservations by Event Chart -->
