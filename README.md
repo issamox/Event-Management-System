@@ -16,7 +16,7 @@ Clone the repository
 
 Switch to the repo folder
 
-    cd eventManagementSystem
+    cd Event-Management-System
 
 Install all the dependencies using composer
 
@@ -31,7 +31,11 @@ Generate a new application key
     php artisan key:generate
 
 
-Run the database migrations with simple data (**Set the database connection in .env before migrating**)
+Run the database seeder
+
+    php artisan migrate
+
+Run the database migrations  (**Set the database connection in .env before migrating**)
 
     php artisan db:seed
 

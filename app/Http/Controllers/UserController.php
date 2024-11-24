@@ -9,12 +9,38 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    // Show all users
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('reservations')->paginate(10);
-        return view('users.index', compact('users'));
+        // Apply optional filters for role and reservation status
+        $query = User::with('reservations');
+
+        // Filter by role if specified
+        if ($request->has('role') && $request->role !== 'all') {
+            $query->where('role', $request->role);
+        }
+
+        // Filter by reservation status if specified
+        if ($request->has('reservations')) {
+            if ($request->reservations === 'with-reservations') {
+                $query->has('reservations');
+            } elseif ($request->reservations === 'no-reservations') {
+                $query->doesntHave('reservations');
+            }
+        }
+
+        // Paginate the results
+        $users = $query->paginate(10)->withQueryString();
+
+        // Pass filters back to the view for persisting UI state
+        return view('users.index', [
+            'users' => $users,
+            'filters' => [
+                'role' => $request->role ?? 'all',
+                'reservations' => $request->reservations ?? 'all',
+            ],
+        ]);
     }
+
 
     public function create()
     {
