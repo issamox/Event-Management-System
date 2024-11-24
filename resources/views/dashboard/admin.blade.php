@@ -51,6 +51,40 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Reservations by Event Chart -->
+            <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Reservations by Event</h3>
+                <canvas id="reservationsChart"></canvas>
+            </div>
         </div>
     </div>
+
+    @section('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const ctx = document.getElementById('reservationsChart').getContext('2d');
+            const reservationsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($events->pluck('name')),
+                    datasets: [{
+                        label: 'Reservations',
+                        data: @json($events->pluck('reservations_count')),
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    @endsection
 </x-app-layout>

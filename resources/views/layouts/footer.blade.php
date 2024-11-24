@@ -6,6 +6,7 @@
 </footer>
 <!-- Include SweetAlert2 Library -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@yield('scripts')
 @if(session('success'))
     <script>
 
