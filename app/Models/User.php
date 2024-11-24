@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -46,8 +47,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function reservation()
+    public function reservations()
     {
-        return $this->belongsToMany(Event::class, 'reservations')->withTimestamps();
+        return $this->belongsToMany(Event::class, 'reservations', 'user_id', 'event_id')
+            ->withTimestamps();
     }
 }

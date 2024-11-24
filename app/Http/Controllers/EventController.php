@@ -106,14 +106,6 @@ class EventController extends Controller
             return redirect()->route('events.show', $event->id)->with('error', 'You have already a reservation for this event.');
         }
 
-        // Check if the user's email has already been used for RSVPing to the event
-        $existingReservation = $event->reservations()->whereHas('user', function($query) use ($user) {
-            $query->where('email', $user->email);
-        })->exists();
-
-        if ($existingReservation) {
-            return redirect()->route('events.show', $event->id)->with('error', 'An RSVP already exists for this email.');
-        }
 
         // Add RSVP entry
         $event->reservations()->attach(auth()->id());

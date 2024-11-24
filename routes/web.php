@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use \App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::resource('events', EventController::class);
+Route::resource('users', UserController::class);
 Route::post('events/{event}/rsvp', [EventController::class,'rsvp'])->name('events.rsvp');
 
 
