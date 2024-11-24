@@ -26,7 +26,7 @@ class StoreEventRequest extends FormRequest
             'date' => 'required|date',
             'location' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'rsvp_limit' => 'required|integer|min:1',
+            'rsvp_limit' => 'required|integer|min:1|max:20',
 
         ];
     }

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -27,7 +28,7 @@ class EventController extends Controller
         }
 
 
-        $events = $events->get();
+        $events = $events->paginate(10);
 
         return view('events.index', compact('events'));
 
@@ -53,6 +54,9 @@ class EventController extends Controller
 
     }
 
+    public function show(Event $event){
+        return view('events.show', compact('event'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -86,4 +90,35 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'Event deleted successfully');
 
     }
+
+    // POST /events/{id}/rsvp
+    public function rsvp(Event $event)
+    {
+        $user = Auth::user();
+
+        // Check if RSVP limit is reached
+        if ($event->reservations()->count() >= $event->rsvp_limit) {
+            return redirect()->route('events.show', $event->id)->with('error', 'RSVP limit reached for this event.');
+        }
+
+        // Check if the user has already reservation
+        if ($event->reservations()->where('user_id', $user->id)->exists()) {
+            return redirect()->route('events.show', $event->id)->with('error', 'You have already a reservation for this event.');
+        }
+
+        // Check if the user's email has already been used for RSVPing to the event
+        $existingReservation = $event->reservations()->whereHas('user', function($query) use ($user) {
+            $query->where('email', $user->email);
+        })->exists();
+
+        if ($existingReservation) {
+            return redirect()->route('events.show', $event->id)->with('error', 'An RSVP already exists for this email.');
+        }
+
+        // Add RSVP entry
+        $event->reservations()->attach(auth()->id());
+
+        return redirect()->route('events.show', $event->id)->with('success', 'RSVP successful! We look forward to seeing you at the event.');
+    }
+
 }

@@ -11,4 +11,10 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = ['name','date','location','description','rsvp_limit'];
+
+    public function reservations()
+    {
+        return $this->belongsToMany(User::class, 'reservations')->withTimestamps();
+    }
+
 }

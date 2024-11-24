@@ -21,7 +21,7 @@ class EventFactory extends Factory
             'description' => $this->faker->text(),
             'date' => $this->faker->date(),
             'location' => $this->faker->address(),
-            'rsvp_limit' => $this->faker->randomNumber(1,100),
+            'rsvp_limit' => $this->faker->randomNumber(1,20),
         ];
     }
 }
